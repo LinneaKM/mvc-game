@@ -100,12 +100,11 @@ class Game
         return "lose";
     }
 
-    public function runGame(): void
+    public function runGame(): string
     {
         $data = [];
         if ($this->gameStatus == "pregame") {
-            $body = renderView("layout/pregame.php");
-            sendResponse($body);
+            return renderView("layout/pregame.php");
         } elseif ($this->gameStatus == "ingame") {
             $data["playerScore"] = $this->playerScore;
             $data["playerRoll"] = $this->player->getGraphicalRepresentation();
@@ -114,8 +113,7 @@ class Game
             $data["gameStatus"] = $this->gameStatus;
             $data["roundArray"] = $this->roundArray;
             //$data["computerRoll"] = $this->computer->getGraphicalRepresentation();
-            $body = renderView("layout/ingame.php", $data);
-            sendResponse($body);
+            return renderView("layout/ingame.php", $data);
         } elseif ($this->gameStatus == "endgame") {
             $data["playerScore"] = $this->playerScore;
             $data["playerRoll"] = $this->player->getGraphicalRepresentation();
@@ -123,8 +121,8 @@ class Game
             $data["computerScore"] = $this->computerScore;
             $data["gameStatus"] = $this->gameStatus;
             $data["roundArray"] = $this->roundArray;
-            $body = renderView("layout/ingame.php", $data);
-            sendResponse($body);
+            return renderView("layout/ingame.php", $data);
         }
+        return "";
     }
 }

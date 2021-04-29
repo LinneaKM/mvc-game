@@ -1,3 +1,2 @@
-/home/linnea/Skola/dbwebb-kurser/mvc/me/game/src/Router/Router.php:21	The method dispatch() has a Cyclomatic Complexity of 23. The configured cyclomatic complexity threshold is 10.
-/home/linnea/Skola/dbwebb-kurser/mvc/me/game/src/Router/Router.php:63	The method dispatch uses an else expression. Else clauses are basically not necessary and you can simplify the code by not using them.
-/home/linnea/Skola/dbwebb-kurser/mvc/me/game/src/Router/Router.php:64	Missing class import via use statement (line '64', column '29').
+/home/linnea/Skola/dbwebb-kurser/mvc/me/game/src/Controller/Debug.php:24	Avoid using static access to class '\Nyholm\Psr7\Stream' in method '__invoke'.
+/home/linnea/Skola/dbwebb-kurser/mvc/me/game/src/Controller/Game21.php:31	The method renderGame uses an else expression. Else clauses are basically not necessary and you can simplify the code by not using them.
