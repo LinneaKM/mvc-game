@@ -10,32 +10,32 @@ namespace Lika20\Dice;
 class DiceHand
 {
     private int $sum;
-    private array $dices;
+    private array $rollableDice;
 
     public function __construct(int $diceAmount)
     {
         for ($i = 0; $i < $diceAmount; $i++) {
-            $this->dices[$i] = new GraphicalDice();
+            $this->rollableDice[$i] = new GraphicalDice();
         }
         $this->sum = 0;
     }
 
     public function rollAll(): void
     {
-        $len = count($this->dices);
+        $len = count($this->rollableDice);
 
         $this->sum = 0;
         for ($i = 0; $i < $len; $i++) {
-            $this->sum += $this->dices[$i]->roll();
+            $this->sum += $this->rollableDice[$i]->roll();
         }
     }
 
     public function getLastRoll(): string
     {
         $res = "";
-        $len = count($this->dices);
+        $len = count($this->rollableDice);
         for ($i = 0; $i < $len; $i++) {
-            $res .= $this->dices[$i]->getLastRoll() . ", ";
+            $res .= $this->rollableDice[$i]->getLastRoll() . ", ";
         }
         return substr($res, 0, -2) . " = " . $this->sum;
     }
@@ -49,9 +49,9 @@ class DiceHand
     {
         if ($this->sum != 0) {
             $res = "";
-            $len = count($this->dices);
+            $len = count($this->rollableDice);
             for ($i = 0; $i < $len; $i++) {
-                $res .= $this->dices[$i]->diceRepresentation() . "\n\n";
+                $res .= $this->rollableDice[$i]->diceRepresentation() . "\n\n";
             }
             return substr($res, 0, -2);
         }

@@ -7,10 +7,7 @@ namespace Lika20\Dice;
 use Lika20\Dice\DiceHand;
 
 use function Mos\Functions\{
-    redirectTo,
-    renderView,
-    sendResponse,
-    url
+    renderView
 };
 
 /**
