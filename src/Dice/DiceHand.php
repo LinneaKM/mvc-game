@@ -9,8 +9,8 @@ namespace Lika20\Dice;
  */
 class DiceHand
 {
-    private int $sum;
-    private array $rollableDice;
+    protected int $sum;
+    protected array $rollableDice;
 
     public function __construct(int $diceAmount)
     {
