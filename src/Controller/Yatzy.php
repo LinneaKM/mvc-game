@@ -27,9 +27,11 @@ class Yatzy
         $data = [
             "header" => "Rainbow page",
             "message" => "Hey, edit this to do it youreself!",
+            "unsaved" => [1, 2, 3],
+            "saved" => [4, 5]
         ];
 
-        $body = renderView("layout/yatzy.php");
+        $body = renderView("layout/yatzy.php", $data);
 
         return $psr17Factory
             ->createResponse(200)
