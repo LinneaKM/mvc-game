@@ -15,3 +15,37 @@ footer {
     min-height: 4em;
     text-align: center;
 }
+
+p {
+    margin: 0.5rem 0;
+}
+
+button {
+    margin: 1rem;
+}
+
+.yatzy-container,
+.dice-container,
+.unsaved-dice,
+.saved-dice {
+    display: flex;
+    flex-direction: row;
+}
+
+.unsaved-container {
+    width: 150px;
+    margin-right: 5rem;
+}
+
+.saved-dice {
+    width: 150px;
+    margin-right: 10rem;
+}
+
+.score-container {
+    width: 200px;
+}
+
+.yatzy-header {
+    margin-bottom: 0.5rem;
+}
