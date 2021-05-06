@@ -44,6 +44,32 @@ class Yatzy
             ->withBody($psr17Factory->createStream($body));
     }
 
+    public function updateGame(): ResponseInterface
+    {
+        $game = $_SESSION["yatzyGame"];
+
+        switch ($_POST["action"]) {
+            case "Roll":
+                $this->rollPressed($game);
+                break;
+            case "Save":
+                $this->savePressed($game);
+                break;
+            case "Add":
+                $this->addPressed($game);
+                break;
+            case "Next round":
+                $this->nextRoundPressed($game);
+                break;
+            case "New game":
+                $this->newGamePressed();
+                break;
+        }
+        return (new Response())
+            ->withStatus(301)
+            ->withHeader("Location", url("/yatzy"));
+    }
+
     private function rollPressed(YatzyGame $game): void
     {
         if ($game->getRollAmount() < 2) {
@@ -92,31 +118,5 @@ class Yatzy
     private function newGamePressed(): void
     {
         $_SESSION["yatzyGame"] = new YatzyGame();
-    }
-
-    public function updateGame(): ResponseInterface
-    {
-        $game = $_SESSION["yatzyGame"];
-
-        switch ($_POST["action"]) {
-            case "Roll":
-                $this->rollPressed($game);
-                break;
-            case "Save":
-                $this->savePressed($game);
-                break;
-            case "Add":
-                $this->addPressed($game);
-                break;
-            case "Next round":
-                $this->nextRoundPressed($game);
-                break;
-            case "New game":
-                $this->newGamePressed();
-                break;
-        }
-        return (new Response())
-            ->withStatus(301)
-            ->withHeader("Location", url("/yatzy"));
     }
 }
