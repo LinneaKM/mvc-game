@@ -10,12 +10,12 @@ namespace Lika20\Dice;
 class GraphicalDice extends Dice
 {
     private array $graphics = [
-        1 => "   \n * \n   ",
-        2 => "*  \n   \n  *",
-        3 => "*  \n * \n  *",
-        4 => "* *\n   \n* *",
-        5 => "* *\n * \n* *",
-        6 => "* *\n* *\n* *"
+        1 => "dice-1",
+        2 => "dice-2",
+        3 => "dice-3",
+        4 => "dice-4",
+        5 => "dice-5",
+        6 => "dice-6"
     ];
 
     public function __construct()

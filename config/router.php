@@ -37,4 +37,5 @@ $router->addGroup("/game21", function (RouteCollector $router) {
 
 $router->addGroup("/yatzy", function (RouteCollector $router) {
     $router->addRoute("GET", "", ["\Lika20\Controller\Yatzy", "renderGame"]);
+    $router->addRoute("POST", "/update", ["\Lika20\Controller\Yatzy", "updateGame"]);
 });

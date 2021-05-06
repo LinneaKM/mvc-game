@@ -28,10 +28,16 @@ class Game21
 
         if (isset($_SESSION["game"])) {
             $game = $_SESSION["game"];
-        } else {
-            $game = new Game();
-            $_SESSION["game"] = $game;
+
+            $body = $game->runGame();
+
+            return $psr17Factory
+            ->createResponse(200)
+            ->withBody($psr17Factory->createStream($body));
         }
+
+        $game = new Game();
+        $_SESSION["game"] = $game;
 
         $body = $game->runGame();
 

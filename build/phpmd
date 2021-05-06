@@ -1,2 +1,1 @@
 /home/linnea/Skola/dbwebb-kurser/mvc/me/game/src/Controller/Debug.php:24	Avoid using static access to class '\Nyholm\Psr7\Stream' in method '__invoke'.
-/home/linnea/Skola/dbwebb-kurser/mvc/me/game/src/Controller/Game21.php:31	The method renderGame uses an else expression. Else clauses are basically not necessary and you can simplify the code by not using them.

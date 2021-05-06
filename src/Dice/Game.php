@@ -104,7 +104,7 @@ class Game
             return renderView("layout/pregame.php");
         } elseif ($this->gameStatus == "ingame") {
             $data["playerScore"] = $this->playerScore;
-            $data["playerRoll"] = $this->player->getGraphicalRepresentation();
+            $data["playerRoll"] = $this->player->getGraphicalRepresentation($this->player->getRollableDice());
             $data["winOrLose"] = "";
             $data["computerScore"] = $this->computerScore;
             $data["gameStatus"] = $this->gameStatus;
@@ -113,7 +113,7 @@ class Game
             return renderView("layout/ingame.php", $data);
         } elseif ($this->gameStatus == "endgame") {
             $data["playerScore"] = $this->playerScore;
-            $data["playerRoll"] = $this->player->getGraphicalRepresentation();
+            $data["playerRoll"] = $this->player->getGraphicalRepresentation($this->player->getRollableDice());
             $data["winOrLose"] = $this->checkWinLose();
             $data["computerScore"] = $this->computerScore;
             $data["gameStatus"] = $this->gameStatus;

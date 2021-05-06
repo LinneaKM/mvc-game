@@ -7,7 +7,7 @@ namespace Lika20\Controller;
 use Nyholm\Psr7\Factory\Psr17Factory;
 use Nyholm\Psr7\Response;
 use Psr\Http\Message\ResponseInterface;
-use Lika20\Dice\Game;
+use Lika20\Dice\YatzyGame;
 
 use function Mos\Functions\{
     destroySession,
@@ -24,43 +24,99 @@ class Yatzy
     {
         $psr17Factory = new Psr17Factory();
 
-        $data = [
-            "header" => "Rainbow page",
-            "message" => "Hey, edit this to do it youreself!",
-            "unsaved" => [1, 2, 3],
-            "saved" => [4, 5]
-        ];
+        $game = null;
 
-        $body = renderView("layout/yatzy.php", $data);
+        if (isset($_SESSION["yatzyGame"])) {
+            $game = $_SESSION["yatzyGame"];
+            $body = $game->runGame();
+
+            return $psr17Factory
+            ->createResponse(200)
+            ->withBody($psr17Factory->createStream($body));
+        }
+        $game = new YatzyGame();
+        $_SESSION["yatzyGame"] = $game;
+
+        $body = $game->runGame();
 
         return $psr17Factory
             ->createResponse(200)
             ->withBody($psr17Factory->createStream($body));
     }
 
+    private function rollPressed(YatzyGame $game): void
+    {
+        if ($game->getRollAmount() < 2) {
+            $game->playerRoll();
+            $game->updateRollAmount();
+            $game->setGameStatus("saving");
+            return;
+        }
+        $game->playerRoll();
+        $game->updateRollAmount();
+        $game->updateRemainingDice();
+        $game->setGameStatus("savescore");
+    }
 
-    // public function updateGame(): ResponseInterface
-    // {
-    //     $game = $_SESSION["game"];
+    private function savePressed(YatzyGame $game): void
+    {
+        if (!isset($_POST["unsaved"])) {
+            $_POST["unsaved"] = [];
+        }
+        if (!isset($_POST["saved"])) {
+            $_POST["saved"] = [];
+        }
+        $game->updateDice($_POST["unsaved"], $_POST["saved"]);
+        if ($game->isAllSaved()) {
+            $game->setGameStatus("savescore");
+            return;
+        }
+        $game->setGameStatus("rolling");
+    }
 
-    //     if ($_POST["action"] == "Start game") {
-    //         $game->initiateGame((int)$_POST["dice"]);
-    //         $game->setGameStatus("ingame");
-    //     } else if ($_POST["action"] == "Roll") {
-    //         $game->playerRoll();
-    //     } else if ($_POST["action"] == "End turn") {
-    //         $game->computerRoll();
-    //         $game->setGameStatus("endgame");
-    //     } else if ($_POST["action"] == "New round") {
-    //         $game->saveRound();
-    //         $game->newRound();
-    //         $game->setGameStatus("ingame");
-    //     } else if ($_POST["action"] == "Clear rounds") {
-    //         $game->clearRounds();
-    //     }
+    private function addPressed(YatzyGame $game): void
+    {
+        $game->addToScoreBoard($_POST["choice"]);
+        if ($game->isGameOver()) {
+            $game->setGameStatus("gameover");
+            return;
+        }
+        $game->setGameStatus("showscore");
+    }
 
-    //     return (new Response())
-    //         ->withStatus(301)
-    //         ->withHeader("Location", url("/game21"));
-    // }
+    private function nextRoundPressed($game): void
+    {
+        $game->nextRound();
+    }
+
+    private function newGamePressed(): void
+    {
+        $_SESSION["yatzyGame"] = new YatzyGame();
+    }
+
+    public function updateGame(): ResponseInterface
+    {
+        $game = $_SESSION["yatzyGame"];
+
+        switch ($_POST["action"]) {
+            case "Roll":
+                $this->rollPressed($game);
+                break;
+            case "Save":
+                $this->savePressed($game);
+                break;
+            case "Add":
+                $this->addPressed($game);
+                break;
+            case "Next round":
+                $this->nextRoundPressed($game);
+                break;
+            case "New game":
+                $this->newGamePressed();
+                break;
+        }
+        return (new Response())
+            ->withStatus(301)
+            ->withHeader("Location", url("/yatzy"));
+    }
 }

@@ -16,9 +16,14 @@ $updateUrl = url("/game21/update");
     <div class="player-score">
         <h3>Player score</h3>
         <p><?= $playerScore ?></p>
-        <?php if ($playerRoll) : ?>
-            <pre><?= $playerRoll ?></pre>
-        <?php endif; ?>
+            <?php if ($playerRoll) : ?>
+                <p class="dice-utf8">
+                    <?php foreach ($playerRoll as $die) : ?>
+                        <i class="<?= $die ?>"></i>
+                    <?php endforeach; ?>
+                </p>
+            <?php endif; ?>
+        </p>
     </div>
     <div class="computer-score">
         <h3>Computer score</h3>

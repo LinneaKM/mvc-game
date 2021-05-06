@@ -30,6 +30,11 @@ class DiceHand
         }
     }
 
+    public function getRollableDice(): array
+    {
+        return $this->rollableDice;
+    }
+
     public function getLastRoll(): string
     {
         $res = "";
@@ -45,16 +50,16 @@ class DiceHand
         return $this->sum;
     }
 
-    public function getGraphicalRepresentation(): string
+    public function getGraphicalRepresentation(array $diceArray): array
     {
         if ($this->sum != 0) {
-            $res = "";
-            $len = count($this->rollableDice);
+            $res = [];
+            $len = count($diceArray);
             for ($i = 0; $i < $len; $i++) {
-                $res .= $this->rollableDice[$i]->diceRepresentation() . "\n\n";
+                array_push($res, $diceArray[$i]->diceRepresentation());
             }
-            return substr($res, 0, -2);
+            return $res;
         }
-        return "";
+        return [];
     }
 }
