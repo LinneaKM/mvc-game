@@ -6,9 +6,7 @@ namespace Lika20\Dice;
 
 use Lika20\Dice\YatzyDiceHand;
 
-use function Mos\Functions\{
-    renderView
-};
+use function Mos\Functions\renderView;
 
 /**
  * Class Game
